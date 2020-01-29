@@ -1,7 +1,6 @@
 ﻿using Microsoft.DirectX;
 using Microsoft.DirectX.Direct3D;
 using System;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Power4
@@ -35,20 +34,17 @@ namespace Power4
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (!device.CheckCooperativeLevel())
+            {
+                device.Reset(pParams);
+                DefineTriange();
+            }
             device.BeginScene();
             device.SetStreamSource(0, buffer, 0);
             device.VertexFormat = format;
             device.DrawPrimitives(PrimitiveType.TriangleList, 0, 1);
             device.EndScene();
-            if (device.CheckCooperativeLevel())
-            {
-                device.Present();
-            }
-            else
-            {
-                Thread.Sleep(100);
-                device.Reset(pParams);
-            }
+            device.Present();
         }
     }
 }
