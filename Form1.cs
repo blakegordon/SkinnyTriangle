@@ -37,8 +37,8 @@ namespace Power4
             if (!device.CheckCooperativeLevel())
             {
                 device.Reset(pParams);
-                DefineTriange();
             }
+            DefineTriange();
             device.BeginScene();
             device.SetStreamSource(0, buffer, 0);
             device.VertexFormat = format;
